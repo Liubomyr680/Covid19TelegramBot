@@ -11,7 +11,6 @@ import java.util.Date;
 @Table(name = "data")
 @Data
 @AllArgsConstructor
-
 @NoArgsConstructor
 public class Covid19Data {
 

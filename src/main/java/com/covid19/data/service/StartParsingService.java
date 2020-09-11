@@ -8,7 +8,6 @@ import com.covid19.data.utils.Parser;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -38,15 +37,13 @@ public class StartParsingService {
             log.error("Parsing problem", e);
         }
 
-        List<Covid19Data> dataFromDB = new LinkedList<>(covid19Repository.findAll());
-        List<Covid19Data> union = new LinkedList<>(dataFromParsing);
-        union.removeAll(dataFromDB);
+        List<Covid19Data> dataList = new LinkedList<>(dataFromParsing);
+        covid19Repository.deleteAllTable();
 
-        for (Covid19Data newRecords : union) {
-            covid19Repository.save(newRecords);
+        for (Covid19Data records : dataList) {
+            covid19Repository.save(records);
         }
 
-
-        return union;
+        return dataList;
     }
 }
