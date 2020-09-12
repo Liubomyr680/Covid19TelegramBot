@@ -38,11 +38,11 @@ public class StartParsingService {
         }
 
         List<Covid19Data> dataList = new LinkedList<>(dataFromParsing);
-        covid19Repository.deleteAllTable();
-
-        for (Covid19Data records : dataList) {
-            covid19Repository.save(records);
-        }
+//        covid19Repository.deleteAllTable();
+//
+//        for (Covid19Data records : dataList) {
+//            covid19Repository.save(records);
+//        }
 
         return dataList;
     }
