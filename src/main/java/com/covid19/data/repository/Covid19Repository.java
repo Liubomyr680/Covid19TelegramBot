@@ -4,6 +4,7 @@ import com.covid19.data.entity.Covid19Data;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -16,5 +17,12 @@ public interface Covid19Repository extends JpaRepository<Covid19Data, Long> {
     @Transactional
     @Query(value = "truncate table data", nativeQuery = true)
     void deleteAllTable();
+
+//    @Query(value = "SELECT * FROM json_data j WHERE j.number LIKE CONCAT(:number ,'%')",
+//            nativeQuery = true)
+
+    @Query(value = "SELECT * FROM data d WHERE d.area = (:area ,'%')",
+        nativeQuery = true)
+    List<Covid19Data> findByArea(String area);
 
 }
