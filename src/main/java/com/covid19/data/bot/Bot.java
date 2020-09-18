@@ -3,7 +3,6 @@ package com.covid19.data.bot;
 import com.covid19.data.Covid19Application;
 import com.covid19.data.entity.Covid19Data;
 import com.covid19.data.service.DataResponse;
-import lombok.Data;
 import org.glassfish.hk2.api.messaging.SubscribeTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -54,17 +53,25 @@ public class Bot extends TelegramLongPollingBot {
         }
     }
 
-    public void sndDataFromDB(Message message, List<Covid19Data> list){
+    public void sndDataFromDB(Message message, String text){
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
         sendMessage.setReplyToMessageId(message.getMessageId());
+        sendMessage.setText(text);
         try{
             setButtons(sendMessage);
             execute(sendMessage);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+//
+//
+//        List<Covid19Data> list1 = new ArrayList<>(dataResponse.getData(message.getText()));
+//        System.out.println(list1);
+//        text = list1.toString();
+//        return text;
+
     }
 
     public void setButtons(SendMessage sendMessage){
@@ -98,7 +105,8 @@ public class Bot extends TelegramLongPollingBot {
                     sndMsg(message, "What we will configure?");
                     break;
                 default:
-                    sndDataFromDB(message, dataResponse.getData(message.getText()));
+                    Data data = new Data(dataResponse);
+                    sndDataFromDB( message, data.result(message.getText()) );
             }
         }
     }

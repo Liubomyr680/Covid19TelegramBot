@@ -20,9 +20,11 @@ public interface Covid19Repository extends JpaRepository<Covid19Data, Long> {
 
 //    @Query(value = "SELECT * FROM json_data j WHERE j.number LIKE CONCAT(:number ,'%')",
 //            nativeQuery = true)
+//
+//    @Query(value = "SELECT * FROM data d WHERE d.area LIKE CONCAT (:area ,'%')",
+//        nativeQuery = true)
+//    List<Covid19Data> findByArea(@Param("area") String area);
 
-    @Query(value = "SELECT * FROM data d WHERE d.area = (:area ,'%')",
-        nativeQuery = true)
-    List<Covid19Data> findByArea(String area);
+    List<Covid19Data> findBySettlement(String settlement);
 
 }
