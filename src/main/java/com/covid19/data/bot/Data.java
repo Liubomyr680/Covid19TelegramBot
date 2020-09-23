@@ -18,9 +18,8 @@ public class Data {
     }
 
     public  String result(String text){
-        List<Covid19Data> list = new ArrayList<>(dataResponse.getData(text));
+        List<Covid19Data> list = new ArrayList<>(dataResponse.getDataBySettlement(text));
         List<Covid19Data> list2 = new ArrayList<>();
-
 
         JSONArray jsonArray= new JSONArray(list);
         Iterator i = jsonArray.iterator();
@@ -41,16 +40,9 @@ public class Data {
             covid19Data.setTotal_death(jsonObject.getInt("total_recover"));
             covid19Data.setTotal_recover(jsonObject.getInt("total_recover"));
             list2.add(covid19Data);
-
         }
 
-
-
-
-
-
         System.out.println(list);
-        text = list2.toString();
-        return text;
+        return list2.toString();
     }
 }

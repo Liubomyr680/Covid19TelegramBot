@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
 
 @Repository
@@ -18,6 +19,9 @@ public interface Covid19Repository extends JpaRepository<Covid19Data, Long> {
     @Query(value = "truncate table data", nativeQuery = true)
     void deleteAllTable();
 
+    @Query(value = "select area from data", nativeQuery = true)
+    HashSet<String> selectAllArea();
+
 //    @Query(value = "SELECT * FROM json_data j WHERE j.number LIKE CONCAT(:number ,'%')",
 //            nativeQuery = true)
 //
@@ -25,6 +29,9 @@ public interface Covid19Repository extends JpaRepository<Covid19Data, Long> {
 //        nativeQuery = true)
 //    List<Covid19Data> findByArea(@Param("area") String area);
 
+    List<Covid19Data> findByArea(String area);
     List<Covid19Data> findBySettlement(String settlement);
+    List<Covid19Data> findByAreaAndSettlement(String area, String sattlement);
+
 
 }
