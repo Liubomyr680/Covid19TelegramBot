@@ -22,11 +22,10 @@ public class DataResponse {
 
         List<Covid19Data> str = covid19Repository.findBySettlement(settlement);
         return str;
-
     }
 
-    public List<Covid19Data> getDataByAreaAndSettlement(String area, String sattlement){
-        List<Covid19Data> str = covid19Repository.findByAreaAndSettlement(area, sattlement);
+    public Covid19Data getDataByAreaAndSettlement(String area, String sattlement){
+        Covid19Data str = covid19Repository.findByAreaAndSettlement(area, sattlement);
         return str;
     }
 

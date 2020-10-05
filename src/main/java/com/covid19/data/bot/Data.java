@@ -2,12 +2,6 @@ package com.covid19.data.bot;
 
 import com.covid19.data.entity.Covid19Data;
 import com.covid19.data.service.DataResponse;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class Data {
 
@@ -17,32 +11,18 @@ public class Data {
         this.dataResponse = dataResponse;
     }
 
-    public  String result(String text){
-        List<Covid19Data> list = new ArrayList<>(dataResponse.getDataBySettlement(text));
-        List<Covid19Data> list2 = new ArrayList<>();
+    public  String result(String area, String settlement){
+        Covid19Data covid19Data = dataResponse.getDataByAreaAndSettlement(area, settlement);
 
-        JSONArray jsonArray= new JSONArray(list);
-        Iterator i = jsonArray.iterator();
-
-        while (i.hasNext()) {
-
-            Covid19Data covid19Data = new Covid19Data();
-            JSONObject jsonObject = (JSONObject) i.next();
-
-            covid19Data.setDate(jsonObject.getString("date"));
-            covid19Data.setArea(jsonObject.getString("area"));
-            covid19Data.setRegion(jsonObject.getString("region"));
-            covid19Data.setSettlement(jsonObject.getString("settlement"));
-            covid19Data.setSettlement_coordinate_lng(jsonObject.getDouble("settlement_coordinate_lng"));
-            covid19Data.setSettlement_coordinate_wid(jsonObject.getDouble("settlement_coordinate_wid"));
-            covid19Data.setTotal_suspect(jsonObject.getInt("total_confirm"));
-            covid19Data.setTotal_confirm(jsonObject.getInt("total_death"));
-            covid19Data.setTotal_death(jsonObject.getInt("total_recover"));
-            covid19Data.setTotal_recover(jsonObject.getInt("total_recover"));
-            list2.add(covid19Data);
-        }
-
-        System.out.println(list);
-        return list2.toString();
+        return "Область: "+ covid19Data.getArea()+ "\n" +
+                "Район: "+ covid19Data.getRegion()+ "\n"+
+                "Село: "+ covid19Data.getSettlement()+ "\n"+
+                "Дата: "+ covid19Data.getDate()+ "\n\n" +
+                "Координати довгота: "+ covid19Data.getSettlement_coordinate_lng()+ "\n" +
+                "Координати широта: " + covid19Data.getSettlement_coordinate_wid()+ "\n\n"+
+                "Всього з підозрою: " + covid19Data.getTotal_suspect()+ "\n" +
+                "Всього підтверджених: " + covid19Data.getTotal_confirm()+ "\n" +
+                "Всього померло: " + covid19Data.getTotal_death()+ "\n" +
+                "Всього виздоровіло: " + covid19Data.getTotal_recover();
     }
 }

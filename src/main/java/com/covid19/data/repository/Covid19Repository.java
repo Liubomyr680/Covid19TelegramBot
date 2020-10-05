@@ -16,22 +16,16 @@ public interface Covid19Repository extends JpaRepository<Covid19Data, Long> {
 
     @Modifying(clearAutomatically = true)
     @Transactional
-    @Query(value = "truncate table data", nativeQuery = true)
+    @Query(value = "truncate table CovidData", nativeQuery = true)
     void deleteAllTable();
 
-    @Query(value = "select area from data", nativeQuery = true)
+    @Query(value = "select area from CovidData", nativeQuery = true)
     HashSet<String> selectAllArea();
-
-//    @Query(value = "SELECT * FROM json_data j WHERE j.number LIKE CONCAT(:number ,'%')",
-//            nativeQuery = true)
-//
-//    @Query(value = "SELECT * FROM data d WHERE d.area LIKE CONCAT (:area ,'%')",
-//        nativeQuery = true)
-//    List<Covid19Data> findByArea(@Param("area") String area);
 
     List<Covid19Data> findByArea(String area);
     List<Covid19Data> findBySettlement(String settlement);
-    List<Covid19Data> findByAreaAndSettlement(String area, String sattlement);
+
+    Covid19Data findByAreaAndSettlement(String area, String settlement);
 
 
 }
